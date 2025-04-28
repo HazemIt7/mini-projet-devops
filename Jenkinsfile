@@ -22,7 +22,13 @@ pipeline {
                 git url: 'https://github.com/HazemIt7/mini-projet-devops.git', branch: 'main' // Remplacez par l'URL de VOTRE repo et la bonne branche !
             }
         }
-
+        // test docker
+        stage('Test Docker') {
+            steps {
+                sh 'docker --version'
+                sh 'docker ps'
+            }
+        }
         // Étape 2: Construire l'image Docker
         stage('Build Docker Image') {
             steps {
