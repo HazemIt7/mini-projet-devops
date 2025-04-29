@@ -7,4 +7,4 @@ def test_hello_route():
     response = client.get('/')  # Faire une requête GET sur '/'
 
     assert response.status_code == 200  # Vérifier que le statut est 200
-    assert b"Hello World" in response.data  # Vérifier que la réponse 
+    assert b"Hello World" in response.data  # Vérifier que la réponse
