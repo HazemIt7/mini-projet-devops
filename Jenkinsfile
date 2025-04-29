@@ -22,6 +22,23 @@ pipeline {
                 git url: 'https://github.com/HazemIt7/mini-projet-devops.git', branch: 'main' // Remplacez par l'URL de VOTRE repo et la bonne branche !
             }
         }
+        stage('Test') {
+            steps {
+                script {
+                    // Option 1: Exécuter dans l'environnement Jenkins (si Python est dispo et configuré)
+                    /* sh 'pip install -r requirements.txt'
+                     sh 'pytest'
+                    */
+                    // Option 2: Utiliser un conteneur Python temporaire pour isoler les tests
+                    
+                    docker.image('python:3.9-slim').inside {
+                        sh 'pip install --no-cache-dir -r requirements.txt'
+                        sh 'pytest -v' // -v pour plus de détails
+                    }
+                    
+                }
+            }
+        }
         // test docker
         stage('Test Docker') {
             steps {
