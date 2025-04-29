@@ -22,14 +22,25 @@ pipeline {
                 git url: 'https://github.com/HazemIt7/mini-projet-devops.git', branch: 'main' // Remplacez par l'URL de VOTRE repo et la bonne branche !
             }
         }
+        
+        // Étape de linting pour vérifier le code Python
+        stage('Lint') {
+            steps {
+                script {
+                    // Conteneur Python temporaire
+                    docker.image('python:3.9-slim').inside {
+                        sh 'pip install --no-cache-dir flake8'
+                        sh 'flake8 .'
+                    }
+                }
+            }
+        } 
+
+        // étape de test: Utiliser un conteneur Python temporaire pour isoler les tests
         stage('Test') {
             steps {
                 script {
-                    // Option 1: Exécuter dans l'environnement Jenkins (si Python est dispo et configuré)
-                    /* sh 'pip install -r requirements.txt'
-                     sh 'pytest'
-                    */
-                    // Option 2: Utiliser un conteneur Python temporaire pour isoler les tests
+
                     
                     docker.image('python:3.9-slim').inside {
                         sh 'pip install --no-cache-dir -r requirements.txt'
