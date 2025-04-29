@@ -9,7 +9,7 @@ pipeline {
         DOCKER_IMAGE_NAME = 'hazem911/mini-projet-devops'
         // Ou sans push vers Docker Hub:
         // DOCKER_IMAGE_NAME = 'mon-app-web-jenkins'
-        DOCKER_IMAGE_TAG = "latest" // Vous pouvez aussi utiliser le numéro de build: ${BUILD_NUMBER}
+        DOCKER_IMAGE_TAG = "build-${env.BUILD_NUMBER}" 
         CONTAINER_NAME = 'webapp-jenkins' // Nom du conteneur qui sera lancé
     }
 
