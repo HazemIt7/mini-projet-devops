@@ -67,6 +67,21 @@ pipeline {
                 }
             }
         }
+        stage('Scan Image') {
+            steps {
+                // Exécute Trivy en tant que conteneur pour scanner l'image locale construite
+                // Le montage du socket Docker permet à Trivy d'accéder aux images sur l'hôte
+                // --rm supprime le conteneur Trivy après exécution
+                // --exit-code 1 : Fait échouer le scan (et donc le build) si des vulnérabilités HIGH ou CRITICAL sont trouvées
+                // --severity HIGH,CRITICAL : Ne rapporte que ces niveaux de sévérité
+                sh """
+                docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                aquasec/trivy image --exit-code 1 --severity HIGH,CRITICAL ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+                """
+                // Pour juste afficher le rapport sans faire échouer le build, enlevez --exit-code 1
+                // Pour voir toutes les vulnérabilités, enlevez --severity HIGH,CRITICAL
+            }
+        }
 
         // Étape 3: (Optionnel) Pousser l'image sur Docker Hub
         // Décommentez ce stage si vous avez configuré les credentials Docker Hub
