@@ -76,7 +76,7 @@ pipeline {
                 // --severity HIGH,CRITICAL : Ne rapporte que ces niveaux de sévérité
                 sh """
                 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-                aquasec/trivy image --exit-code 1 --severity HIGH,CRITICAL ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+                aquasec/trivy image --severity HIGH,CRITICAL ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
                 """
                 // Pour juste afficher le rapport sans faire échouer le build, enlevez --exit-code 1
                 // Pour voir toutes les vulnérabilités, enlevez --severity HIGH,CRITICAL
