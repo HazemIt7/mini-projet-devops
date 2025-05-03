@@ -8,7 +8,7 @@ app = Flask(__name__)
 def hello():
     # Affiche "Hello World from..." et le nom d'hôte du conteneur
     hostname = platform.node()
-    return f"Hello World from docker\n"
+    return f"Hello World from {hostname}!\n"
 
 
 if __name__ == "__main__":
